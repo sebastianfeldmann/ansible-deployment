@@ -1,0 +1,9 @@
+---
+- name: Install Apache2
+  sudo: yes
+  apt: pkg=apache2 state=latest
+
+- name: Change default apache site
+  sudo: yes
+  template: src=etc/apache2/sites-available/default.tpl dest=/etc/apache2/sites-available/default
+  notify: restart apache2

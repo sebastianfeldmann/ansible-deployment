@@ -1,0 +1,5 @@
+---
+- hosts: webservers
+  sudo: true
+  roles:
+    - apache
