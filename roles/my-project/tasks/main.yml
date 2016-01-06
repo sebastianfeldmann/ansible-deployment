@@ -1,0 +1,11 @@
+---
+- name: Copy files to server
+
+- name: Create cache directories
+
+- name: Install vhost configuration
+  sudo: yes
+  template: src=ect/apache2/sites-available/my-project.tpl dest=/etc/apache2/sites-available/my-project.conf
+  notify: restart apache2
+
+- name: Activate vhost configuration
