@@ -14,7 +14,7 @@
                group=no
 
 # create a cache directory that is writable for the webserver
-- name: Create cache directoriy
+- name: Create cache directory
   file: path=/var/www/_cache_/my-project/{{ version }}
         state=directory
         group=www-data
