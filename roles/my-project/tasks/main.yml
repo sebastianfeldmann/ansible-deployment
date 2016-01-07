@@ -1,11 +1,38 @@
----
+# create the directory for the current app version
+- name: Create version directory
+  file: path=/var/www/my-project/{{ version }}
+        state=directory
+
+# copy the prepared app to your webservers
 - name: Copy files to server
+  synchronize: src={{ app }}
+               dest=/var/www/my-project/{{ version }}
+               perms=yes
+               recursive=yes
+               delete=yes
+               owner=no
+               group=no
 
-- name: Create cache directories
+# create a cache directory that is writable for the webserver
+- name: Create cache directoriy
+  file: path=/var/www/_cache_/my-project/{{ version }}
+        state=directory
+        group=www-data
+        owner=www-data
 
-- name: Install vhost configuration
-  sudo: yes
-  template: src=ect/apache2/sites-available/my-project.tpl dest=/etc/apache2/sites-available/my-project.conf
+# deploy the vhost configuration for our project
+- name: Deploy vhost configuration
+  action: template
+          src=etc/apache2/sites-available/my-project.conf
+          dest=/etc/apache2/sites-available/my-project.conf
   notify: restart apache2
+  tags: rollback
 
+# could be done with "command: a2ensite my-project.conf"
+# but this would allways trigger a apache restart even if nothing changes
 - name: Activate vhost configuration
+  file: dest=/etc/apache2/sites-enabled/010-my-project.conf
+        src=/etc/apache2/sites-available/my-project.conf
+        state=link
+  notify: restart apache2
+  tags: apache
