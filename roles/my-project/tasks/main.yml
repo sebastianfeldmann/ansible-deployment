@@ -28,8 +28,9 @@
   notify: restart apache2
   tags: rollback
 
+# create a symlink to activate the vhost
 # could be done with "command: a2ensite my-project.conf"
-# but this would allways trigger a apache restart even if nothing changes
+# but this would allways trigger an apache restart even if nothing changes
 - name: Activate vhost configuration
   file: dest=/etc/apache2/sites-enabled/010-my-project.conf
         src=/etc/apache2/sites-available/my-project.conf
