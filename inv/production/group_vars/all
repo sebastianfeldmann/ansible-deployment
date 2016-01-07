@@ -1,0 +1,5 @@
+system:
+  environment: production
+
+my_project:
+  domain: www.my-project.de

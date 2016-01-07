@@ -1,0 +1,5 @@
+system:
+  environment: integration
+
+my_project:
+  domain: www.my-project.int

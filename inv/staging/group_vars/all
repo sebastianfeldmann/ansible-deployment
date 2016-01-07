@@ -1,0 +1,5 @@
+system:
+  environment: staging
+
+my-project:
+  domain: www.my-project.test
